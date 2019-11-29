@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: stell
+Build-Jdk: 10.0.2
+Implementation-Title: mbs
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: mbs
+Implementation-Vendor: Pivotal Software, Inc.
+Implementation-URL: http://projects.spring.io/spring-boot/mbs/
+Created-By: Maven Integration for Eclipse
+

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+		<a th:href="@{'/movies/' + ${date}}">&lt; 상영 영화 목록으로 가기</a>
+	</div>
+	<p
+		style = "color : red" 
+		th:if="${error != null}"
+		th:text = "${error}"
+	></p>
+	<form 
+		th:object = "${bookingForm}"
+		th:action = "@{'/movies/reservations/'+ ${date} + '/' + ${movieId}}"
+		method = "post">
+		영화 :   <span th:text = "${movie.movie.movieName}"> </span> <br />
+		남은 좌석 수 :  <span th:text = "${movie.seats}"> </span> <br />
+		예매자 이름 :  <span th:text = "${user.lastName + ' ' + user.firstName}"> </span> <br />
+		날짜 :   <span th:text="${#temporals.format(date, 'yyyy/M/d')}"> </span>
+	<br />
+	시간대 :  <select th:field = "*{startTime}">
+		<option
+			th:each = "time : ${timeList}"	
+			th:text = "${time}"
+			th:value = "${time}">09:00</option>
+	</select> <span
+		th:if = "${#fields.hasErrors('startTime')}"
+		th:errors = "*{startTime}"
+		style = "color : red"> error </span> - <select th:field = "*{endTime}">
+		<option 
+			th:each = "time : ${timeList}"	
+			th:text = "${time}"
+			th:value = "${time}">10:00</option>
+	 </select> <span
+	 	th:if = "${#fields.hasErrors('endTime')}"
+		th:errors = "*{endTime}"
+		style = "color : red"> error </span> <br />
+	 <button>예매</button>
+	</form>
+	
+	
+	<table>
+		<tr>
+			<th>시간대  </th>
+			<th>예매자  </th>
+			<th>기능  </th>
+		</tr>
+		<tr th:each = "reservation : ${reservations}">
+			<td><span th:text = "${reservation.startTime}" /> - <span th:text = "${reservation.endTime}" /></td>
+			<td><span th:text = "${reservation.user.lastName}" /><span th:text = "${reservation.user.firstName}" /></td>
+			<td>
+				<form
+					th:action = "@{'/movies/reservations/' + ${date} + '/' + ${movieId}}"
+					method = "post"
+					th:if = "${user.userId == reservation.user.userId}">
+					<input
+						type = "hidden"
+						name = "reservationId"
+						th:value = "${reservation.reservationId}" /> <input
+						type = "submit"
+						name = "cancel"
+						value = "취소" />
+				</form>
+			</td>
+		</tr>
+	   </table>
+</body>
+</html>
