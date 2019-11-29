@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+    <h3>영화 목록</h3>
+    <a th:href="@{'/movies/' + ${date}}">&lt; 상영 영화 목록으로 가기</a>
+    <span th:text="|${#temporals.format(date, 'yyyy/M/d')}의 영화|"> </span>
+    <ul>
+        <li>영화 제목 : <span th:text="${movie.movie.movieName}"></span> </li>
+        <li>남은 인원 수 : <span th:text="${movie.seats}"></span></li>
+    </ul>
+</body>
+</html>
